@@ -1,0 +1,2 @@
+colorlog==4.0.2
+python-telegram-bot==11.1.0

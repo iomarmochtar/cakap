@@ -1,0 +1,8 @@
+*.pyc
+build/
+dist/
+test/
+virtenv/*
+
+*.egg-info/
+config.ini
