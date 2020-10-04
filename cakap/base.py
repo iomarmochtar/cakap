@@ -10,25 +10,15 @@ import re
 import sys
 import inspect
 import json
-from glob import glob
-from ConfigParser import ConfigParser
 from colorlog import ColoredFormatter
-from pprint import pprint
 from .utils import Utils 
 from .decorators import auth, catch_error, chelp, AutoSet
 from .filters import FilterNotMatch
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, InlineQueryHandler, Job 
-
-# agar bisa jalan async
-from telegram.ext.dispatcher import run_async
-
-# untuk job queue
-from telegram.ext import Job 
+from telegram.ext import Updater, CommandHandler, MessageHandler
+from six import with_metaclass
 
 
-class BotBase(object):
-
-    __metaclass__ = AutoSet
+class BotBase(with_metaclass(AutoSet)):
 
     users = {} 
     allowed_users = []
@@ -49,6 +39,7 @@ class BotBase(object):
 
         self.updater = Updater(
             token, 
+            use_context=False,
             workers=workers
         )
 
@@ -133,7 +124,6 @@ class BotBase(object):
         """Show available help"""
         Utils.send(bot, update, '\n'.join(self.helps))
 
-
     @classmethod
     def get_cmd_name(self, name):
         """
@@ -190,7 +180,6 @@ class BotBase(object):
                         pass_args=True if cmd_args else False
                     )
                 )
-
 
         self.after_main()
 

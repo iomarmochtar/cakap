@@ -3,6 +3,7 @@
 __author__ = ('Imam Omar Mochtar', ('iomarmochtar@gmail.com',))
 
 import os
+import sys
 from cakap.base import BotBase 
 from cakap.decorators import auth, chelp
 from cakap.filters import filters
@@ -50,7 +51,10 @@ class Example(BotBase):
         return 'just a plain cmd'
 
 if __name__ == '__main__':
-    token = 'fjdkfdkfkdjfk' 
+    token = os.environ.get('BOT_TOKEN')
+    if not token:
+        print('Need to set token in env BOT_TOKEN')
+        sys.exit(1)
     # registered user that allowed sending message to function wrapped with @auth decorator
     users = ['iomarmochtar']
     bot = Example(
